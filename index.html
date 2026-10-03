@@ -9,103 +9,225 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "zpix";
+        }
+        @font-face {
+        font-family: "zpix";
+        src: url("fonts/zpix.ttf") format("truetype")
+            
         }
 
+
+
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-            
+           
             color: #333;
             line-height: 1.6;
             min-height: 100vh;
-            margin: 0;
-           
-           
-            
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 导航 */
+        .nav {
+            list-style: none;
+            display: flex;
+            /* justify-content: center; */
+            gap: 0;
             padding: 0;
+            background-color: #fffafa84;
+            
         }
 
-       
-       
-
-        h1 {
-            font-size: 28px;
-            margin-bottom: 0px;
-            color: #1a1a1a;
-        }
-
-        .subtitle {
-            color: #888;
-            font-size: 16px;
-            margin-bottom: 32px;
-        }
         .btn {
             padding: 12px 28px;
-            background: #667eea;
+            background: #666a806e ;
             color: #fff;
             border: none;
-            border-radius: 8px;
-            font-size: 15px;
+            /* border-radius: 8px; */
+            font-size: 20px;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
-            margin: 10px; /* 按钮之间的间距 */
         }
 
         .btn:hover {
-            background: #5568d3;
+            background: #767b998c;
         }
 
         .btn:active {
-            transform: scale(0.97);   /* 按下时轻微缩小 */
+            transform: scale(0.97);
         }
-        html {
-            scroll-behavior: smooth;      /* 平滑滚动 */
-        }
+
+        /* 每一页 */
         .page {
-            height: 100vh;                /* 每页占满一屏 */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: 
+                linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)),
+                url("image/page2.jpg") no-repeat center / cover fixed;
+        }
+
+        /* 中间内容区，占满剩余空间 */
+        .content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            
-            gap: 20px;
-            background: linear-gradient( rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5)) fixed, 
-                        url(image/page1.jpg) no-repeat center fixed ;  /* 设置背景图片 */
-            background-size: cover;
-           
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
         }
-        .box {
-           border-bottom: #1a1a1a 2px solid;
-           width: 100%;
-           bottom: 0px;
-           
-        }
-       
 
-       
+        .content h1 {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        /* 条纹 */
+        .footer {
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(to right, #ff6b6b, #feca57, #48dbfb);
+        }
+        li {
+            flex: 1;
+        }
+        /* 唱片大小 */
+        .animated { 
+            width: 200px;
+        } 
+        .ring {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;      /* 容器变成圆 */
+        
+        object-fit: cover;       /* 图片等比缩放填满圆，不变形 */
+        
+    }
+    #musicplayer {
+        display: grid;
+        place-items: center;
+        position: fixed;
+        z-index: 999;
+        
+        
+
+    }
+    #musicplayer:hover{
+        /* transform: scale(1.005); */
+        
+    }
+    
+    .cir{
+        grid-area: 1 / 1 
+    }
+
+              
+
+      
     </style>
+
 </head>
-<body >
-    <section class="page">
-        <h1 style="text-align: center;">你好！</h1>
-        <!-- <img src="image/sen3.png"  width="200" height="200" > -->
-        
-        
-        <p style="text-align:center; flex: 1;">这里是我的主页<br>这里存放这我平常的各类小作品<br>比如我的一些日记和与蓝色鲸鱼一起跑的项目</p>
-        <p class="box"></p>
-       
-    </section>
-    <section class="page" >
-        
-        
-        <button class="btn" style="width: 200px; height: 100px;" onclick="document.location='diary.html'"> 日常的碎碎念 </button>
-       
-        <button class="btn" style="width: 200px; height: 100px;" onclick="document.location='proj.html'"> 小项目 </button>
-    </section>
+<body>
     
-   
+    
+    
+    
+    <section class="page">
+        <!-- 导航 -->
+        <ul class="nav">
+            <li><button class="btn" style="width: 100%; height: 100%;" onclick="document.location='diary.html'">碎碎念</button></li>
+            <li><button class="btn" style="width: 100%; height: 100%;" onclick="document.location='proj.html'">小项目</button></li>
+            <li><button class="btn" style="width: 100%; height: 100%;" onclick="document.location='proj.html'">每日音乐</button></li>
+
+        </ul>
+
+        <!-- 内容区 -->
+        <div class="content">
+            <h1>你好！</h1>
+            
+            <p>
+                这里是我的主页<br>
+                这里存放着我平常的各类小作品<br>
+                比如我的一些日记和与蓝色鲸鱼一起跑的项目
+            </p>
+        </div>
+        <div id = "musicplayer"  >
+            <img src="gui/cha1.png" draggable="false" class="animated cir" >
+            <img src="music/1.png"  draggable="false" class="ring cir" >
+        
+        </div>
+
+        <!-- 条纹沉底 -->
+        <div class="footer"></div>
+    </section>
+
+    <!-- js定义 -->
+     <script>
+        class player {
+            constructor() {
+                // this.audio = audio;
+                // this.playButton = playButton;
+                
+                // this.isPlaying = false;
+
+                // this.playButton.addEventListener('click', () => this.Play());
+            }
+
+            // Play() {
+            //     if (this.isPlaying) {
+            //         this.audio.pause();
+            //         this.playButton.classList.remove('playing');
+            //     } else {
+            //         this.audio.play();
+            //         this.playButton.classList.add('playing');
+            //     }
+            //     this.isPlaying = !this.isPlaying;
+            // }
+            
+            Move() {
+                let isDragging = false, offsetX = 0, offsetY = 0;
+                const pl = document.getElementById("musicplayer");
+                const pls = pl.getBoundingClientRect();
+               
+
+
+                pl.addEventListener("mousedown", (e) => {
+                    isDragging = true;
+                    offsetX = e.clientX - pl.offsetLeft;
+                    offsetY = e.clientY - pl.offsetTop;
+                });
+
+                document.addEventListener("mousemove", (e) => {
+                    if (!isDragging )  return;
+                    
+                    pl.style.left =Math.max(-pls.width*0.5, Math.min(window.innerWidth - 0.5*pls.width, e.clientX - offsetX)) + "px";
+                    pl.style.top = Math.max(-pls.height, Math.min(window.innerHeight - pls.height, e.clientY - offsetY)) + "px";
+                });
+
+                document.addEventListener("mouseup", () => {
+                    isDragging = false;
+                });
+                    
+                    }
+            }
+        const p = new player();
+        p.Move();
+        
+
 
     
-    
-    
+        
+    </script>
+
+
+
+
 
 </body>
 </html>

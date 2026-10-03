@@ -1,0 +1,10 @@
+
+@font-face {
+font-family: "zpix";
+src: url("../fonts/zpix.ttf") format("truetype");
+    
+}
+
+*{
+    font-family: "zpix";
+}
