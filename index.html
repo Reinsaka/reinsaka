@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<link rel="preload" as="image" href="image/page2.webp">
+<link rel="preload" as="image" href="gui/cha1.svg">
+<link rel="preload" as="image" href="music/1.webp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -98,12 +101,12 @@
             flex: 1;
         }
         /* 唱片大小 */
-        .animated { 
+        .space { 
             width: 200px;
         } 
         .ring {
-        width: 100px;
-        height: 100px;
+        width: 102px;
+        height: 102px;
         border-radius: 50%;      /* 容器变成圆 */
         
         object-fit: cover;       /* 图片等比缩放填满圆，不变形 */
@@ -126,6 +129,46 @@
     .cir{
         grid-area: 1 / 1 
     }
+    .icon{
+        width: 25px;
+        position: absolute;
+        bottom: -40px;
+        
+
+    }
+    .icon:hover{
+        transform: scale(1.1);
+    }
+    .icon.on{
+        opacity: 1;
+        z-index: 1000;
+        
+
+    }
+    .icon.off{
+        opacity: 0;
+        z-index: 0;
+        
+
+    }
+    .roll{
+        animation: spin 2s linear infinite;
+        animation-play-state: paused;
+        
+
+    }
+    .roll.roll_running{
+        animation-play-state: running;
+    }
+    @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    
 
               
 
@@ -158,8 +201,15 @@
             </p>
         </div>
         <div id = "musicplayer"  >
-            <img src="gui/cha1.png" draggable="false" class="animated cir" >
-            <img src="music/1.png"  draggable="false" class="ring cir" >
+            <div id ="disc1" style="display: grid ; place-items: center;">
+                <img src="gui/cha1.svg" draggable="false" class="space cir" >
+                <img id= "cover" src=""  draggable="false" class="ring cir" >
+            </div>
+            <img src="gui/cha3.svg" draggable="false" class="icon " style="left: 30px; bottom: -39px; width: 30px;" > <!-- 链接 -->
+            <img src="gui/cha4.svg" draggable="false" class="icon on" id="playButton">
+            <img src="gui/cha2.svg" draggable="false" class="icon off" id="pauseButton"><!--zt1 -->
+            
+                
         
         </div>
 
@@ -169,26 +219,52 @@
 
     <!-- js定义 -->
      <script>
-        class player {
-            constructor() {
-                // this.audio = audio;
-                // this.playButton = playButton;
-                
-                // this.isPlaying = false;
+        
+       
+       
+       class player {
+            constructor(audio, playButton, pauseButton,disc) {
+                this.audio = audio;
+                this.playButton = playButton;
+                this.pauseButton = pauseButton;
+                this.disc = disc;
 
-                // this.playButton.addEventListener('click', () => this.Play());
+                this.isPlaying = false;
+                this.playButton.addEventListener('click', () => {this.Play()} );
+                this.pauseButton.addEventListener('click', () => {this.Play()} );
+                
             }
 
-            // Play() {
-            //     if (this.isPlaying) {
-            //         this.audio.pause();
-            //         this.playButton.classList.remove('playing');
-            //     } else {
-            //         this.audio.play();
-            //         this.playButton.classList.add('playing');
-            //     }
-            //     this.isPlaying = !this.isPlaying;
-            // }
+            Play() {
+                this.disc.classList.add('roll');
+                if (this.isPlaying) {
+                    
+                    this.audio.pause();
+                    this.playButton.classList.remove('off');
+                    this.playButton.classList.add('on');
+                    this.pauseButton.classList.remove('on');
+                    this.pauseButton.classList.add('off');
+                    this.disc.classList.remove('roll_running');
+                    
+                    
+
+
+
+                } else {
+                    this.audio.play();
+                    this.playButton.classList.remove('on');
+                    this.playButton.classList.add('off');
+                    this.pauseButton.classList.remove('off');
+                    this.pauseButton.classList.add('on');
+                    
+                    this.disc.classList.add('roll_running');
+
+                    
+
+                }
+                this.isPlaying = !this.isPlaying;
+            }
+            
             
             Move() {
                 let isDragging = false, offsetX = 0, offsetY = 0;
@@ -216,14 +292,33 @@
                     
                     }
             }
-        const p = new player();
-        p.Move();
         
+        // 读取音乐json
+        let musiclist = [];
+        fetch("js/musiclist.json")
+        .then(res => res.json())   
+        .then(data => {musiclist = data; console.log(data);})
+        .then(() => {
+            const cover1 = document.getElementById("cover")
+            ind = Math.floor(Math.random() * musiclist.length)
+            const audio2use = new Audio(musiclist[ind].name);
+            const cover2use = musiclist[ind].cover
+            const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));   
+            cover1.src = cover2use
+            p.Move();
+        })
 
+
+
+   
 
     
         
+    
+        
     </script>
+
+    
 
 
 
