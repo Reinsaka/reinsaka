@@ -31,9 +31,14 @@
 
         body {
            
-            color: #333;
+            
             line-height: 1.6;
             min-height: 100vh;
+            
+            background: 
+                linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)) bottom / 100% 30%  no-repeat,
+                url("image/page2.webp") no-repeat center / cover fixed;
+            background-attachment: fixed;
         }
 
         html {
@@ -60,6 +65,8 @@
             font-size: 20px;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
+            width: 100%; 
+            height: 100%;
         }
 
         .btn:hover {
@@ -75,9 +82,6 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            background: 
-                linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)),
-                url("image/page2.webp") no-repeat center / cover fixed;
         }
 
         /* 中间内容区，占满剩余空间 */
@@ -92,9 +96,11 @@
         }
 
         .content h1 {
+            
             font-size: 28px;
-            color: #1a1a1a;
+            color: #000000;
             margin-bottom: 20px;
+            /* margin-top: 100px; */
         }
 
         /* 条纹 */
@@ -117,64 +123,128 @@
         
         object-fit: cover;       /* 图片等比缩放填满圆，不变形 */
         
-    }
-    #musicplayer {
-        display: grid;
-        place-items: center;
-        position: fixed;
-        z-index: 999;
-        
-        
+     }
+        #musicplayer {
+            display: grid;
+            place-items: center;
+            position: fixed;
+            z-index: 999;
+            top:30%;
+            left:10%
+            
 
-    }
-    #musicplayer:hover{
-        /* transform: scale(1.005); */
-        
-    }
-    
-    .cir{
-        grid-area: 1 / 1 
-    }
-    .icon{
-        width: 25px;
-        position: absolute;
-        bottom: -40px;
-        
-
-    }
-    .icon:hover{
-        transform: scale(1.1);
-    }
-    .icon.on{
-        opacity: 1;
-        z-index: 1000;
-        
-
-    }
-    .icon.off{
-        opacity: 0;
-        z-index: 0;
-        
-
-    }
-    .roll{
-        animation: spin 2s linear infinite;
-        animation-play-state: paused;
-        
-
-    }
-    .roll.roll_running{
-        animation-play-state: running;
-    }
-    @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
         }
+        #musicplayer:hover{
+            /* transform: scale(1.005); */
+            
+        }
+        
+        .cir{
+            grid-area: 1 / 1 
+        }
+        .icon{
+            width: 25px;
+            position: absolute;
+            bottom: -40px;
+            
+
+        }
+        .icon:hover{
+            transform: scale(1.1);
+        }
+        .on{
+            opacity: 1;
+            z-index: 50;
+            
+
+        }
+        .off{
+            opacity: 0;
+            z-index: 0;
+            
+
+        }
+        .roll{
+            animation: spin 2s linear infinite;
+            animation-play-state: paused;
+            
+
+        }
+        .roll.roll_running{
+            animation-play-state: running;
+        }
+        @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+        #head2{
+                background-color: #87d2e298;
+                
+                display: flex; 
+                justify-content: center; 
+                flex-direction: column;
+                align-items: center;
+                
+                
+                width: 600px;
+                height: 200px;
+                margin:30px auto;
+                border-radius: 10px;
+        }
+
+
+        .dia_bt{
+                width: 600px;
+                height:140px;
+                margin:10px auto;
+                border-radius: 10px;
+                background-color: #87d2e298;
+                display: flex; 
+                /* justify-content: center;  */
+                flex-direction:row;
+                align-items: center;
+                border: outset;
+                border-color: #87d1e26e;
+                border-radius: 10px;
+                transition: transform 0.6s ease;
+                position: sticky;
+                top: 150px;
+
+            }
     
+        .dia_bt:hover {
+            background-color: #62b3c6af;
+        }
+        .dia_bt:active {
+            transform: scale(0.99);
+        }
+
+
+        .page.active{
+            display:flex;
+            }
+
+        .page.passive{
+            display: none;
+        }
+        #read_box{
+            background-color: #62b3c6af;
+            display: flex;
+            width: 600px;
+            height: 800px;
+            
+            margin:auto;
+            margin-top:0 ;
+           
+
+
+        }
+            
 
               
 
@@ -187,26 +257,87 @@
     
     
     
-    <section class="page">
+    <section class="page active" id = "hub">
         <!-- 导航 -->
         <ul class="nav">
-            <li><button class="btn" style="width: 100%; height: 100%;" onclick="document.location='diary.html'">碎碎念</button></li>
-            <li><button class="btn" style="width: 100%; height: 100%;" onclick="document.location='proj.html'">小项目</button></li>
-            <li><button class="btn" style="width: 100%; height: 100%;" onclick="document.location='proj.html'">每日音乐</button></li>
+            <li><button class="btn"  onclick="change('hub','hub')">首页</button></li>
+            <li><button class="btn"  onclick="change('hub','diar')">碎碎念</button></li>
+            <li><button class="btn"  onclick="change('hub','proj')">小项目</button></li>
+            <li><button class="btn"  onclick="document.location='proj.html'">每日音乐</button></li>
 
         </ul>
 
         <!-- 内容区 -->
         <div class="content">
-            <h1>你好！</h1>
+            <h1 style="font-size: 30px;">你好！</h1>
             
-            <p>
+            <p style="font-size: 20px;color: #5fa0a3;">
                 这里是我的主页<br>
                 这里存放着我平常的各类小作品<br>
                 比如我的一些日记和与蓝色鲸鱼一起跑的项目
             </p>
         </div>
-        <div id = "musicplayer"  >
+        
+        
+        <!-- 条纹沉底 -->
+        <div class="footer"></div>
+    </section>
+
+
+    <section id = "diar" class = "page passive"> <!--diary-->  
+        <!-- 导航 -->
+        <ul class="nav">
+            <li><button class="btn"  onclick="change('diar','hub')">首页</button></li>
+            <li><button class="btn"  onclick="change('diar','diar')">碎碎念</button></li>
+            <li><button class="btn"  onclick="change('diar','proj')">小项目</button></li>
+            <li><button class="btn"  onclick="document.location='proj.html'">每日音乐</button></li>
+
+        </ul>
+        <section id = "dia_list" class = "on">
+            <div id = head2>
+                <h2 style= "font-size:30px;letter-spacing: 3px;">日记   </h2>
+                <h2 style="font-size:25px;letter-spacing: 3px;" >记录我的日常和各种想法</h2>
+            </div>
+            <ul  style="list-style: none; margin-top: 10px;" > 
+                <li > <button class = "dia_bt" id = "text_1"  onclick="doc_change('text_1')">
+                    
+                    <img src = "dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;" >
+                    <h2>测试</h2>
+                
+                
+                </button></li>
+                <li><button class = "dia_bt" >
+                    
+                    <img src = "dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
+                    <h2>测试</h2>
+                
+                
+                </button></li>
+                <li><button class = "dia_bt">
+                    
+                    <img src = "dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
+                    <h2>测试</h2>
+                
+                
+                </button></li>
+            
+
+            
+                
+                
+                
+            
+
+            </ul>
+
+
+            
+        </section>
+            
+
+    </section>
+
+    <div id = "musicplayer">
             <div id ="disc1" style="display: grid ; place-items: center;">
                 <img src="gui/cha1.svg" draggable="false" class="space cir" >
                 <img id= "cover" src=""  draggable="false" class="ring cir" >
@@ -217,102 +348,206 @@
             
                 
         
-        </div>
+    </div>
 
-        <!-- 条纹沉底 -->
-        <div class="footer"></div>
-    </section>
 
-    <!-- js定义 -->
-     <script>
-        
-       
-       
-       class player {
-            constructor(audio, playButton, pauseButton,disc) {
-                this.audio = audio;
-                this.playButton = playButton;
-                this.pauseButton = pauseButton;
-                this.disc = disc;
+    
 
-                this.isPlaying = false;
-                this.playButton.addEventListener('click', () => {this.Play()} );
-                this.pauseButton.addEventListener('click', () => {this.Play()} );
+
+
+    
+
+
+<!-- js定义 -->
+    <script>
+    
+    
+    
+    class player {
+        constructor(audio, playButton, pauseButton,disc) {
+            this.audio = audio;
+            this.playButton = playButton;
+            this.pauseButton = pauseButton;
+            this.disc = disc;
+
+            this.isPlaying = false;
+            this.playButton.addEventListener('click', () => {this.Play()} );
+            this.pauseButton.addEventListener('click', () => {this.Play()} );
+            
+        }
+
+        Play() {
+            this.disc.classList.add('roll');
+            if (this.isPlaying) {
                 
+                this.audio.pause();
+                this.playButton.classList.remove('off');
+                this.playButton.classList.add('on');
+                this.pauseButton.classList.remove('on');
+                this.pauseButton.classList.add('off');
+                this.disc.classList.remove('roll_running');
+                
+                
+
+
+
+            } else {
+                this.audio.play();
+                this.playButton.classList.remove('on');
+                this.playButton.classList.add('off');
+                this.pauseButton.classList.remove('off');
+                this.pauseButton.classList.add('on');
+                
+                this.disc.classList.add('roll_running');
+
+                
+
             }
-
-            Play() {
-                this.disc.classList.add('roll');
-                if (this.isPlaying) {
-                    
-                    this.audio.pause();
-                    this.playButton.classList.remove('off');
-                    this.playButton.classList.add('on');
-                    this.pauseButton.classList.remove('on');
-                    this.pauseButton.classList.add('off');
-                    this.disc.classList.remove('roll_running');
-                    
-                    
+            this.isPlaying = !this.isPlaying;
+        }
+        
+        
+        Move() {
+            let isDragging = false, offsetX = 0, offsetY = 0;
+            const pl = document.getElementById("musicplayer");
+            const pls = pl.getBoundingClientRect();
+            
 
 
+            pl.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                offsetX = e.clientX - pl.offsetLeft;
+                offsetY = e.clientY - pl.offsetTop;
+            });
 
-                } else {
-                    this.audio.play();
-                    this.playButton.classList.remove('on');
-                    this.playButton.classList.add('off');
-                    this.pauseButton.classList.remove('off');
-                    this.pauseButton.classList.add('on');
-                    
-                    this.disc.classList.add('roll_running');
+            document.addEventListener("mousemove", (e) => {
+                if (!isDragging )  return;
+                
+                pl.style.left =Math.max(-pls.width*0.5, Math.min(window.innerWidth - 0.5*pls.width, e.clientX - offsetX)) + "px";
+                pl.style.top = Math.max(-pls.height, Math.min(window.innerHeight - pls.height, e.clientY - offsetY)) + "px";
+            });
 
-                    
+            document.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+                
+                }
+        }
+    
+    // 读取音乐json
+    let musiclist = [];
+    fetch("js/musiclist.json")
+    .then(res => res.json())   
+    .then(data => {musiclist = data; console.log(data);})
+    .then(() => {
+        const cover1 = document.getElementById("cover")
+        ind = Math.floor(Math.random() * musiclist.length)
+        const audio2use = new Audio(musiclist[ind].name);
+        const cover2use = musiclist[ind].cover
+        const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));   
+        cover1.src = cover2use
+        p.Move();
+    })
+
+// 页面改变
+    function change(now,dest){
+        let page_now = document.getElementById(now)
+        let page_dest = document.getElementById(dest)
+        page_now.classList.replace('active',"passive")
+        page_dest.classList.replace("passive","active") 
+
+    }
+    let isread = false;
+    let ismoving = false;
+    // 文档
+    function doc_change(doc){
+        
+        let doc2r = document.getElementById(doc)
+        let rect = doc2r.getBoundingClientRect()
+        let dy = -rect.top + 150 -window.scrollY
+        let head = document.getElementById("head2")
+        
+        
+        if (ismoving){
+            return;
+        }
+        else if(!isread) {
+
+
+            ismoving = true
+            
+            
+            document.querySelectorAll("#dia_list .dia_bt").forEach(e => {
+                if (e !== doc2r ){
+                    e.classList.remove('on')
+                    e.classList.add('off')
+
+
 
                 }
-                this.isPlaying = !this.isPlaying;
-            }
+                e.classList.remove('on')
+                head.classList.add('off')
+
             
+            isread = !isread
+            })
+            doc2r.style.transform = `translate(0px, ${dy}px)`;
+            doc2r.addEventListener("transitionend",function nop(){
+                ismoving = false;
+                doc2r.removeEventListener("transitionend",nop)
+
             
-            Move() {
-                let isDragging = false, offsetX = 0, offsetY = 0;
-                const pl = document.getElementById("musicplayer");
-                const pls = pl.getBoundingClientRect();
-               
+            })
+            
+            const readbox = document.createElement("div")
+            readbox.id = "read_box"
+            doc2r.parentElement.appendChild(readbox);
 
-
-                pl.addEventListener("mousedown", (e) => {
-                    isDragging = true;
-                    offsetX = e.clientX - pl.offsetLeft;
-                    offsetY = e.clientY - pl.offsetTop;
-                });
-
-                document.addEventListener("mousemove", (e) => {
-                    if (!isDragging )  return;
-                    
-                    pl.style.left =Math.max(-pls.width*0.5, Math.min(window.innerWidth - 0.5*pls.width, e.clientX - offsetX)) + "px";
-                    pl.style.top = Math.max(-pls.height, Math.min(window.innerHeight - pls.height, e.clientY - offsetY)) + "px";
-                });
-
-                document.addEventListener("mouseup", () => {
-                    isDragging = false;
-                });
-                    
-                    }
-            }
         
-        // 读取音乐json
-        let musiclist = [];
-        fetch("js/musiclist.json")
-        .then(res => res.json())   
-        .then(data => {musiclist = data; console.log(data);})
-        .then(() => {
-            const cover1 = document.getElementById("cover")
-            ind = Math.floor(Math.random() * musiclist.length)
-            const audio2use = new Audio(musiclist[ind].name);
-            const cover2use = musiclist[ind].cover
-            const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));   
-            cover1.src = cover2use
-            p.Move();
-        })
+        
+        
+            }
+        else{
+            ismoving = true
+           
+            document.querySelectorAll("#dia_list .dia_bt").forEach(e => {
+                if (e !== doc2r ){
+                    e.classList.remove('off')
+                    e.classList.add('on')
+
+
+
+                }
+                head.classList.remove('off')
+                head.classList.add('on')
+
+            isread = !isread
+            })
+            doc2r.style.transform = `translate(0px, ${dy}px)`;
+            doc2r.addEventListener("transitionend",function nop(){
+                ismoving = false;
+                doc2r.removeEventListener("transitionend",nop)
+            })
+
+        }
+
+        
+       
+        
+        
+            
+            
+            
+            
+            
+            
+
+        
+        
+        }
+        
+
+    
 
 
 
