@@ -6,9 +6,6 @@
 <link rel="preload" as="image" href="gui/cha3.svg">
 <link rel="preload" as="image" href="gui/cha4.svg">
 
-
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,22 +18,15 @@
             font-family: "zpix";
         }
         @font-face {
-        font-family: "zpix";
-        src: url("fonts/zpix.ttf") format("truetype")
-            
+            font-family: "zpix";
+            src: url("fonts/zpix.ttf") format("truetype")
         }
 
-
-
-
         body {
-           
-            
             line-height: 1.6;
             min-height: 100vh;
-            
-            background: 
-                linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)) bottom / 100% 30%  no-repeat,
+            background:
+                linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)) bottom / 100% 30% no-repeat,
                 url("image/page2.webp") no-repeat center / cover fixed;
             background-attachment: fixed;
         }
@@ -45,27 +35,24 @@
             scroll-behavior: smooth;
         }
 
-        /* 导航 */
         .nav {
             list-style: none;
             display: flex;
-            /* justify-content: center; */
             gap: 0;
             padding: 0;
             background-color: #fffafa84;
-            
+            width: 100%;
         }
 
         .btn {
             padding: 12px 28px;
-            background: #666a806e ;
+            background: #666a806e;
             color: #fff;
             border: none;
-            /* border-radius: 8px; */
             font-size: 20px;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
-            width: 100%; 
+            width: 100%;
             height: 100%;
         }
 
@@ -77,14 +64,16 @@
             transform: scale(0.97);
         }
 
-        /* 每一页 */
         .page {
             height: 100vh;
             display: flex;
             flex-direction: column;
         }
+        #diar {
+            height: auto;
+            min-height: 100vh;
+            }
 
-        /* 中间内容区，占满剩余空间 */
         .content {
             flex: 1;
             display: flex;
@@ -96,323 +85,326 @@
         }
 
         .content h1 {
-            
             font-size: 28px;
             color: #000000;
             margin-bottom: 20px;
-            /* margin-top: 100px; */
         }
 
-        /* 条纹 */
         .footer {
             height: 4px;
             width: 100%;
             background: linear-gradient(to right, #ff6b6b, #feca57, #48dbfb);
         }
+
         li {
             flex: 1;
         }
-        /* 唱片大小 */
-        .space { 
+
+        .space {
             width: 200px;
-        } 
+        }
+
         .ring {
-        width: 102px;
-        height: 102px;
-        border-radius: 50%;      /* 容器变成圆 */
-        
-        object-fit: cover;       /* 图片等比缩放填满圆，不变形 */
-        
-     }
+            width: 102px;
+            height: 102px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         #musicplayer {
             display: grid;
             place-items: center;
             position: fixed;
             z-index: 999;
-            top:30%;
-            left:10%
-            
+            top: 30%;
+            left: 10%
+        }
 
+        .cir {
+            grid-area: 1 / 1
         }
-        #musicplayer:hover{
-            /* transform: scale(1.005); */
-            
-        }
-        
-        .cir{
-            grid-area: 1 / 1 
-        }
-        .icon{
+
+        .icon {
             width: 25px;
             position: absolute;
             bottom: -40px;
-            
-
         }
-        .icon:hover{
+
+        .icon:hover {
             transform: scale(1.1);
         }
-        .on{
-            opacity: 1;
-            z-index: 50;
-            
 
+        .off {
+            display: none !important
         }
-        .off{
-            opacity: 0;
-            z-index: 0;
-            
 
-        }
-        .roll{
+        .roll {
             animation: spin 2s linear infinite;
             animation-play-state: paused;
-            
-
         }
-        .roll.roll_running{
+
+        .roll.roll_running {
             animation-play-state: running;
         }
-        @keyframes spin {
-                from {
-                    transform: rotate(0deg);
-                }
-                to {
-                    transform: rotate(360deg);
-                }
-            }
 
-        #head2{
-                background-color: #87d2e298;
-                
-                display: flex; 
-                justify-content: center; 
-                flex-direction: column;
-                align-items: center;
-                
-                
-                width: 600px;
-                height: 200px;
-                margin:30px auto;
-                border-radius: 10px;
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
+        #head2 {
+            background-color: #87d2e298;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 600px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 10px;
+            opacity: 1;
+            overflow: hidden;
+            will-change: opacity, height, margin;
+            transition: opacity 1s ease, height 1s ease, margin 1s ease;
+        }
 
-        .dia_bt{
-                width: 600px;
-                height:140px;
-                margin:10px auto;
-                border-radius: 10px;
-                background-color: #87d2e298;
-                display: flex; 
-                /* justify-content: center;  */
-                flex-direction:row;
-                align-items: center;
-                border: outset;
-                border-color: #87d1e26e;
-                border-radius: 10px;
-                transition: transform 0.6s ease;
-                position: sticky;
-                top: 150px;
+        #head2.gone {
+            opacity: 0;
+            height: 0;
+            margin: 0 auto;
+            pointer-events: none;
+        }
 
-            }
-    
+        .dia_bt {
+            width: 600px;
+            height: 140px;
+            margin: 10px auto;
+            border-radius: 10px;
+            background-color: #87d2e298;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border: outset;
+            border-color: #87d1e26e;
+        }
+
         .dia_bt:hover {
             background-color: #62b3c6af;
         }
+
         .dia_bt:active {
             transform: scale(0.99);
         }
 
+        .page.active {
+            display: flex;
+        }
 
-        .page.active{
-            display:flex;
-            }
-
-        .page.passive{
+        .page.passive {
             display: none;
         }
-        #read_box{
-            background-color: #62b3c6af;
-            display: flex;
+
+        li.dialist {
             width: 600px;
-            height: 800px;
-            
-            margin:auto;
-            margin-top:0 ;
-           
-
-
+            height: 140px;
+            margin: auto;
+            position: relative;
+            top: 0;
+            opacity: 1;
+            overflow: hidden;
+            will-change: transform, opacity, height, margin;
+            transition: transform 1s ease,
+                        opacity 1s ease,
+                        height 1s ease,
+                        margin 1s ease;
         }
+
+        li.dialist .dia_bt {
+            transition: opacity 1s ease,
+                        height 1s ease,
+                        margin 1s ease;
+        }
+
+        li.dialist.gone {
+            opacity: 0;
+            height: 0;
+            margin: 0 auto;
+            pointer-events: none;
+        }
+
+        li.dialist.gone .dia_bt {
+            opacity: 0;
+            height: 0;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        li.dialist.reading {
+            position: sticky;
+            top: 100px;
+            z-index: 10;
+            margin: 0 auto;
+            overflow: visible;
+        }
+
+        #read_box {
+            width: 600px;
+            height: 0;
+            margin: auto;
+            background-color: #62b3c6af;
+            border-radius: 10px;
+            opacity: 0;
+            overflow: hidden;
             
 
-              
+            position: fixed;
+            top: 200px;
+            z-index: 9;
+            left: 50%;
+            transform : translateX(-50%);
 
-      
+            will-change: height, margin, opacity;
+            transition: height 0.5s ease,
+                        margin 0.5s ease,
+                        opacity 0.5s ease;
+        }
+
+        #read_box.show {
+            height: 800px;
+            margin: 10px auto;
+            opacity: 1;
+            overflow-y: auto;
+            
+        }
+
+        #read_box .read_content {
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #dia_list {
+            width: 100%;
+        }
     </style>
-
 </head>
 <body>
-    
-    
-    
-    
-    <section class="page active" id = "hub">
-        <!-- 导航 -->
-        <ul class="nav">
-            <li><button class="btn"  onclick="change('hub','hub')">首页</button></li>
-            <li><button class="btn"  onclick="change('hub','diar')">碎碎念</button></li>
-            <li><button class="btn"  onclick="change('hub','proj')">小项目</button></li>
-            <li><button class="btn"  onclick="document.location='proj.html'">每日音乐</button></li>
 
+    <section class="page active" id="hub">
+        <ul class="nav">
+            <li><button class="btn" onclick="change('hub','hub')">首页</button></li>
+            <li><button class="btn" onclick="change('hub','diar')">碎碎念</button></li>
+            <li><button class="btn" onclick="change('hub','proj')">小项目</button></li>
+            <li><button class="btn" onclick="document.location='proj.html'">每日音乐</button></li>
         </ul>
 
-        <!-- 内容区 -->
         <div class="content">
             <h1 style="font-size: 30px;">你好！</h1>
-            
             <p style="font-size: 20px;color: #5fa0a3;">
                 这里是我的主页<br>
                 这里存放着我平常的各类小作品<br>
                 比如我的一些日记和与蓝色鲸鱼一起跑的项目
             </p>
         </div>
-        
-        
-        <!-- 条纹沉底 -->
+
         <div class="footer"></div>
     </section>
 
-
-    <section id = "diar" class = "page passive"> <!--diary-->  
-        <!-- 导航 -->
+    <section id="diar" class="page passive">
         <ul class="nav">
-            <li><button class="btn"  onclick="change('diar','hub')">首页</button></li>
-            <li><button class="btn"  onclick="change('diar','diar')">碎碎念</button></li>
-            <li><button class="btn"  onclick="change('diar','proj')">小项目</button></li>
-            <li><button class="btn"  onclick="document.location='proj.html'">每日音乐</button></li>
-
+            <li><button class="btn" onclick="change('diar','hub')">首页</button></li>
+            <li><button class="btn" onclick="change('diar','diar')">碎碎念</button></li>
+            <li><button class="btn" onclick="change('diar','proj')">小项目</button></li>
+            <li><button class="btn" onclick="document.location='proj.html'">每日音乐</button></li>
         </ul>
-        <section id = "dia_list" class = "on">
-            <div id = head2>
-                <h2 style= "font-size:30px;letter-spacing: 3px;">日记   </h2>
-                <h2 style="font-size:25px;letter-spacing: 3px;" >记录我的日常和各种想法</h2>
+
+        <section id="dia_list">
+            <div id="head2">
+                <h2 style="font-size:30px;letter-spacing: 3px;">日记</h2>
+                <h2 style="font-size:25px;letter-spacing: 3px;">记录我的日常和各种想法</h2>
             </div>
-            <ul  style="list-style: none; margin-top: 10px;" > 
-                <li > <button class = "dia_bt" id = "text_1"  onclick="doc_change('text_1')">
-                    
-                    <img src = "dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;" >
-                    <h2>测试</h2>
-                
-                
-                </button></li>
-                <li><button class = "dia_bt" >
-                    
-                    <img src = "dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
-                    <h2>测试</h2>
-                
-                
-                </button></li>
-                <li><button class = "dia_bt">
-                    
-                    <img src = "dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
-                    <h2>测试</h2>
-                
-                
-                </button></li>
-            
 
-            
-                
-                
-                
-            
-
+            <ul style="list-style: none; margin-top: 10px;">
+                <li class="dialist" id="text_1">
+                    <button class="dia_bt" onclick="doc_change('text_1')">
+                        <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
+                        <h2>测试</h2>
+                    </button>
+                </li>
+                <li class="dialist">
+                    <button class="dia_bt">
+                        <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
+                        <h2>测试</h2>
+                    </button>
+                </li>
+                <li class="dialist">
+                    <button class="dia_bt">
+                        <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
+                        <h2>测试</h2>
+                    </button>
+                </li>
             </ul>
-
-
-            
         </section>
-            
-
     </section>
 
-    <div id = "musicplayer">
-            <div id ="disc1" style="display: grid ; place-items: center;">
-                <img src="gui/cha1.svg" draggable="false" class="space cir" >
-                <img id= "cover" src=""  draggable="false" class="ring cir" >
-            </div>
-            <img src="gui/cha3.svg" draggable="false" class="icon " style="left: 30px; bottom: -39px; width: 30px;" > <!-- 链接 -->
-            <img src="gui/cha4.svg" draggable="false" class="icon on" id="playButton">
-            <img src="gui/cha2.svg" draggable="false" class="icon off" id="pauseButton"><!--zt1 -->
-            
-                
-        
+    <section id="proj" class="page passive">
+        <ul class="nav">
+            <li><button class="btn" onclick="change('proj','hub')">首页</button></li>
+            <li><button class="btn" onclick="change('proj','diar')">碎碎念</button></li>
+            <li><button class="btn" onclick="change('proj','proj')">小项目</button></li>
+            <li><button class="btn" onclick="document.location='proj.html'">每日音乐</button></li>
+        </ul>
+    </section>
+
+    
+    
+    
+    
+    <div id="musicplayer">
+        <div id="disc1" style="display: grid; place-items: center;">
+            <img src="gui/cha1.svg" draggable="false" class="space cir">
+            <img id="cover" src="" draggable="false" class="ring cir">
+        </div>
+        <img src="gui/cha3.svg" draggable="false" class="icon" style="left: 30px; bottom: -39px; width: 30px;">
+        <img src="gui/cha4.svg" draggable="false" class="icon on" id="playButton">
+        <img src="gui/cha2.svg" draggable="false" class="icon off" id="pauseButton">
     </div>
 
-
-    
-
-
-
-    
-
-
-<!-- js定义 -->
     <script>
-    
-    
-    
     class player {
-        constructor(audio, playButton, pauseButton,disc) {
+        constructor(audio, playButton, pauseButton, disc) {
             this.audio = audio;
             this.playButton = playButton;
             this.pauseButton = pauseButton;
             this.disc = disc;
-
             this.isPlaying = false;
-            this.playButton.addEventListener('click', () => {this.Play()} );
-            this.pauseButton.addEventListener('click', () => {this.Play()} );
-            
+            this.playButton.addEventListener('click', () => {this.Play()});
+            this.pauseButton.addEventListener('click', () => {this.Play()});
         }
 
         Play() {
             this.disc.classList.add('roll');
             if (this.isPlaying) {
-                
                 this.audio.pause();
                 this.playButton.classList.remove('off');
                 this.playButton.classList.add('on');
                 this.pauseButton.classList.remove('on');
                 this.pauseButton.classList.add('off');
                 this.disc.classList.remove('roll_running');
-                
-                
-
-
-
             } else {
                 this.audio.play();
                 this.playButton.classList.remove('on');
                 this.playButton.classList.add('off');
                 this.pauseButton.classList.remove('off');
                 this.pauseButton.classList.add('on');
-                
                 this.disc.classList.add('roll_running');
-
-                
-
             }
             this.isPlaying = !this.isPlaying;
         }
-        
-        
+
         Move() {
             let isDragging = false, offsetX = 0, offsetY = 0;
             const pl = document.getElementById("musicplayer");
             const pls = pl.getBoundingClientRect();
-            
-
 
             pl.addEventListener("mousedown", (e) => {
                 isDragging = true;
@@ -421,149 +413,90 @@
             });
 
             document.addEventListener("mousemove", (e) => {
-                if (!isDragging )  return;
-                
-                pl.style.left =Math.max(-pls.width*0.5, Math.min(window.innerWidth - 0.5*pls.width, e.clientX - offsetX)) + "px";
+                if (!isDragging) return;
+                pl.style.left = Math.max(-pls.width*0.5, Math.min(window.innerWidth - 0.5*pls.width, e.clientX - offsetX)) + "px";
                 pl.style.top = Math.max(-pls.height, Math.min(window.innerHeight - pls.height, e.clientY - offsetY)) + "px";
             });
 
             document.addEventListener("mouseup", () => {
                 isDragging = false;
             });
-                
-                }
         }
-    
-    // 读取音乐json
+    }
+
     let musiclist = [];
     fetch("js/musiclist.json")
-    .then(res => res.json())   
+    .then(res => res.json())
     .then(data => {musiclist = data; console.log(data);})
     .then(() => {
         const cover1 = document.getElementById("cover")
         ind = Math.floor(Math.random() * musiclist.length)
         const audio2use = new Audio(musiclist[ind].name);
         const cover2use = musiclist[ind].cover
-        const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));   
+        const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));
         cover1.src = cover2use
         p.Move();
     })
 
-// 页面改变
-    function change(now,dest){
+    function change(now, dest){
         let page_now = document.getElementById(now)
         let page_dest = document.getElementById(dest)
-        page_now.classList.replace('active',"passive")
-        page_dest.classList.replace("passive","active") 
-
+        page_now.classList.replace('active', "passive")
+        page_dest.classList.replace("passive", "active")
     }
+
     let isread = false;
     let ismoving = false;
-    // 文档
-    function doc_change(doc){
+
+    function doc_change(doc) {
+        if (ismoving) return;
+        ismoving = true;
+
+        const doc2r = document.getElementById(doc);
+        const head_d = document.getElementById("head2");
+        const others = [...document.querySelectorAll("#dia_list .dialist")].filter(e => e !== doc2r);
         
-        let doc2r = document.getElementById(doc)
-        let rect = doc2r.getBoundingClientRect()
-        let dy = -rect.top + 150 -window.scrollY
-        let head = document.getElementById("head2")
-        
-        
-        if (ismoving){
-            return;
-        }
-        else if(!isread) {
+        if (!isread) {
+            others.forEach(e => e.classList.add('gone'));
+            head_d.classList.add('gone');
 
+            doc2r.classList.add('reading');
 
-            ismoving = true
-            
-            
-            document.querySelectorAll("#dia_list .dia_bt").forEach(e => {
-                if (e !== doc2r ){
-                    e.classList.remove('on')
-                    e.classList.add('off')
+            setTimeout(() => {
+                const box = document.createElement('div');
+                box.id = 'read_box';
+                box.innerHTML = '<div class="read_content">' +
+                    ('这里放正文内容。<br><br>可以很长很长……<br><br>').repeat(30) +
+                    '</div>';
+                
+              
+                doc2r.after(box);
 
+                void box.offsetHeight;
+                box.classList.add('show');
+            }, 300);
 
-
-                }
-                e.classList.remove('on')
-                head.classList.add('off')
-
-            
-            isread = !isread
-            })
-            doc2r.style.transform = `translate(0px, ${dy}px)`;
-            doc2r.addEventListener("transitionend",function nop(){
-                ismoving = false;
-                doc2r.removeEventListener("transitionend",nop)
-
-            
-            })
-            
-            const readbox = document.createElement("div")
-            readbox.id = "read_box"
-            doc2r.parentElement.appendChild(readbox);
-
-        
-        
-        
+            isread = true;
+            setTimeout(() => { ismoving = false; }, 1300);
+        } else {
+            const box = document.getElementById('read_box');
+            if (box) {
+                box.classList.remove('show');
+                setTimeout(() => box.remove(), 500);
             }
-        else{
-            ismoving = true
-           
-            document.querySelectorAll("#dia_list .dia_bt").forEach(e => {
-                if (e !== doc2r ){
-                    e.classList.remove('off')
-                    e.classList.add('on')
 
+            doc2r.classList.remove('reading');
 
+            setTimeout(() => {
+                others.forEach(e => e.classList.remove('gone'));
+                head_d.classList.remove('gone');
+            }, 300);
 
-                }
-                head.classList.remove('off')
-                head.classList.add('on')
-
-            isread = !isread
-            })
-            doc2r.style.transform = `translate(0px, ${dy}px)`;
-            doc2r.addEventListener("transitionend",function nop(){
-                ismoving = false;
-                doc2r.removeEventListener("transitionend",nop)
-            })
-
+            isread = false;
+            setTimeout(() => { ismoving = false; }, 1300);
         }
-
-        
-       
-        
-        
-            
-            
-            
-            
-            
-            
-
-        
-        
-        }
-        
-
-    
-
-
-
-   
-
-    
-        
-    
-        
+    }
     </script>
-
-    
-
-
-
-
 
 </body>
 </html>
