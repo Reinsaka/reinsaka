@@ -1,5 +1,0 @@
-docx
-os
-json
-subprocess
-pathlib
