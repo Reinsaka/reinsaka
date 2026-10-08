@@ -2,14 +2,14 @@ import json
 import os
 from docx import Document
 from pathlib import Path
-
+#更新文本
 BASE_DIR = Path(__file__).resolve().parent      # 脚本所在目录
-data_file = str(BASE_DIR / 'dia' / 'text')
+text_file = str(BASE_DIR / 'dia' / 'text')
 js_file = str(BASE_DIR / 'js' / 'textlist.json')
-doc_list = os.listdir(data_file)
+doc_list = os.listdir(text_file)
 
 
-existing = {"/dia/text/" + j for j in doc_list}
+existing = {text_file + '/' + j for j in doc_list}
 
 with open(js_file, "r", encoding="utf-8") as f:
     data = json.load(f)
@@ -27,7 +27,7 @@ for i in data:
 
 for j in doc_list:
     if "/dia/text/" + j not in docs:
-        docls = Document(data_file + '/' + j)
+        docls = Document(text_file + '/' + j)
         text = "<br>".join(p.text for p in docls.paragraphs)
         data.append({"doc": "/dia/text/" + j, "text": text, "cover": ""})
 
