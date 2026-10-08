@@ -280,6 +280,7 @@
         #read_box .read_content {
             padding: 20px;
             box-sizing: border-box;
+            white-space: pre-wrap; 
         }
 
         #dia_list {
@@ -323,8 +324,8 @@
                 <h2 style="font-size:25px;letter-spacing: 3px;">记录我的日常和各种想法</h2>
             </div>
 
-            <ul style="list-style: none; margin-top: 10px;">
-                <li class="dialist" id="text_1">
+            <ul style="list-style: none; margin-top: 10px;" id = "textlist">
+                <!-- <li class="dialist" id="text_1">
                     <button class="dia_bt" onclick="doc_change('text_1')">
                         <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
                         <h2>测试</h2>
@@ -341,7 +342,7 @@
                         <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
                         <h2>测试</h2>
                     </button>
-                </li>
+                </li> -->
             </ul>
         </section>
     </section>
@@ -370,6 +371,7 @@
     </div>
 
     <script>
+    
     class player {
         constructor(audio, playButton, pauseButton, disc) {
             this.audio = audio;
@@ -423,20 +425,21 @@
             });
         }
     }
-
-    let musiclist = [];
-    fetch("js/musiclist.json")
-    .then(res => res.json())
-    .then(data => {musiclist = data; console.log(data);})
-    .then(() => {
-        const cover1 = document.getElementById("cover")
-        ind = Math.floor(Math.random() * musiclist.length)
-        const audio2use = new Audio(musiclist[ind].name);
-        const cover2use = musiclist[ind].cover
-        const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));
-        cover1.src = cover2use
-        p.Move();
-    })
+    function load_music(){
+        let musiclist = [];
+        fetch("js/musiclist.json")
+            .then(res => res.json())
+            .then(data => {musiclist = data; console.log(data);})
+            .then(() => {
+                const cover1 = document.getElementById("cover")
+                ind = Math.floor(Math.random() * musiclist.length)
+                const audio2use = new Audio(musiclist[ind].name);
+                const cover2use = musiclist[ind].cover
+                const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));
+                cover1.src = cover2use
+                p.Move();
+    })}
+    load_music()
 
     function change(now, dest){
         let page_now = document.getElementById(now)
@@ -444,11 +447,45 @@
         page_now.classList.replace('active', "passive")
         page_dest.classList.replace("passive", "active")
     }
+//
+    function load_doc(){
+        let textlist = []
+        fetch ("js/textlist.json")
+        .then(res => res.json())
+        .then(data => {textlist = data; console.log(data)})
+        .then(() => {
+            let t1 = document.getElementById("textlist")
+            //textlist 
+            for(let loop = 1;loop <= textlist.length;loop++){
+                let new_doc = document.createElement("li") 
+                new_doc.classList.add("dialist")
+                new_doc.id = "text_" + loop
+                new_doc.innerHTML = `
+                        <button class="dia_bt" onclick="doc_change('${new_doc.id}','${textlist[loop-1].text}')">
+                            <img src="dia/cover/text1.webp" style="height: 100px; margin: 10px; border-radius: 8px;">
+                            <h2>测试</h2>
+                        </button>
+                    `;
+                t1.appendChild(new_doc)
 
+
+            }
+
+
+        })
+        }
+    load_doc()
+
+    
+    
+    
+//   
     let isread = false;
     let ismoving = false;
 
-    function doc_change(doc) {
+
+
+    function doc_change(doc,content) {
         if (ismoving) return;
         ismoving = true;
 
@@ -466,7 +503,7 @@
                 const box = document.createElement('div');
                 box.id = 'read_box';
                 box.innerHTML = '<div class="read_content">' +
-                    ('这里放正文内容。<br><br>可以很长很长……<br><br>').repeat(30) +
+                    content+
                     '</div>';
                 
               
@@ -496,6 +533,10 @@
             setTimeout(() => { ismoving = false; }, 1300);
         }
     }
+    
+//
+  
+    
     </script>
 
 </body>
