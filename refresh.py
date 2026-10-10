@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 from docx import Document
 from pathlib import Path
 #更新文本
@@ -33,3 +34,40 @@ for j in doc_list:
 
 with open(js_file, "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
+
+#更新音乐
+music_file = str(BASE_DIR / 'music' / 'music')
+music_list = os.listdir(music_file)#compare cover and music 
+ls = []
+js_file = str(BASE_DIR / 'js' / 'textlist.json')
+with open(js_file, "r", encoding="utf-8") as f:
+    data = json.load(f)
+for i in music_list:
+    
+    ls.append(music_file + '/' + i)
+for j in music_list:
+    
+
+    subprocess.run([
+        'ffmpeg', '-y','-i', music_file + '/' + j,
+        '-map', '0:v', '-c', 'copy',
+        str(BASE_DIR / 'music' / 'cover' / (Path(j).stem + '.jpg'))
+    ])
+#p2wb
+ls = []
+file_list = ["dia","music"]
+for file in file_list:
+    ls = os.listdir(str(BASE_DIR / file / "cover/"))
+    for i in ls:
+        path = str(BASE_DIR / file / "cover/" / i)
+        name = str(BASE_DIR / file / "cover/" /( Path(i).stem +'.webp'))
+        if i.lower().endswith('.webp'):
+            continue;
+        else:
+            subprocess.run([
+                'ffmpeg','-y' ,'-i', path,
+                '-quality','80',
+                name
+    ]) 
+
+    print(ls)
