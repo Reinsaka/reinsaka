@@ -146,6 +146,9 @@
         .roll.roll_running {
             animation-play-state: running;
         }
+        .roll.roll_reset{
+            animation:none;
+        }
 
         @keyframes spin {
             from { transform: rotate(0deg); }
@@ -325,24 +328,7 @@
             </div>
 
             <ul style="list-style: none; margin-top: 10px;" id = "textlist">
-                <!-- <li class="dialist" id="text_1">
-                    <button class="dia_bt" onclick="doc_change('text_1')">
-                        <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
-                        <h2>测试</h2>
-                    </button>
-                </li>
-                <li class="dialist">
-                    <button class="dia_bt">
-                        <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
-                        <h2>测试</h2>
-                    </button>
-                </li>
-                <li class="dialist">
-                    <button class="dia_bt">
-                        <img src="dia/cover/text1.png" style="height: 100px; margin: 10px; border-radius: 8px;">
-                        <h2>测试</h2>
-                    </button>
-                </li> -->
+                
             </ul>
         </section>
     </section>
@@ -354,6 +340,17 @@
             <li><button class="btn" onclick="change('proj','proj')">小项目</button></li>
            
         </ul>
+        <section id="proj_list">
+            <div id="head2">
+                <h2 style="font-size:30px;letter-spacing: 3px;">项目</h2>
+                <h2 style="font-size:25px;letter-spacing: 3px;">闲的无聊做的项目</h2>
+            </div>
+
+            <ul style="list-style: none; margin-top: 10px;" id = "textlist">
+                
+            </ul>
+        </section>
+
     </section>
 
     
@@ -365,39 +362,52 @@
             <img src="gui/cha1.svg" draggable="false" class="space cir">
             <img id="cover" src="" draggable="false" class="ring cir">
         </div>
-        <img src="gui/cha3.svg" draggable="false" class="icon" style="left: 30px; bottom: -39px; width: 30px;">
+        <img src="gui/cha3.svg" draggable="false" class="icon" style="left: 0px; bottom: -39px; width: 30px;">
         <img src="gui/cha4.svg" draggable="false" class="icon on" id="playButton">
-        <img src="gui/cha2.svg" draggable="false" class="icon off" id="pauseButton">
-    </div>
+        <img src="gui/cha2.svg" draggable="false" class="icon off" id="pauseButton" >
+        <img src="gui/cha5.svg" draggable="false" class="icon on" id ="fast" style="left: 120px; bottom: -39px; width: 40px;">
+        <img src="gui/cha6.svg" draggable="false" class="icon on" id ="slow" style="left: 40px; bottom: -39px; width: 40px;">
+
+        </div>
 
     <script>
-    
+    //音乐播放器
     class player {
-        constructor(audio, playButton, pauseButton, disc) {
+        constructor(audio, playButton, pauseButton,alt_head,alt_tail,disc) {
             this.audio = audio;
             this.playButton = playButton;
             this.pauseButton = pauseButton;
+            this.alt_head = alt_head;
+            this.alt_tail = alt_tail;
             this.disc = disc;
             this.isPlaying = false;
+            
             this.playButton.addEventListener('click', () => {this.Play()});
             this.pauseButton.addEventListener('click', () => {this.Play()});
+            this.alt_head.addEventListener('click', () => {this.load_music(1)});
+            this.alt_tail.addEventListener('click', () => {this.load_music(-1)});
+            this.musiclist = [];
+            this.ind_now=0;
+            this.cover1 = document.getElementById('cover')       
+            this.Move()
+            this.load_music(0)
         }
 
         Play() {
             this.disc.classList.add('roll');
             if (this.isPlaying) {
                 this.audio.pause();
-                this.playButton.classList.remove('off');
-                this.playButton.classList.add('on');
-                this.pauseButton.classList.remove('on');
-                this.pauseButton.classList.add('off');
+                this.playButton.classList.replace('off','on');
+                
+                this.pauseButton.classList.replace('on','off');
+                
                 this.disc.classList.remove('roll_running');
             } else {
                 this.audio.play();
-                this.playButton.classList.remove('on');
-                this.playButton.classList.add('off');
-                this.pauseButton.classList.remove('off');
-                this.pauseButton.classList.add('on');
+                this.playButton.classList.replace('on','off');
+                
+                this.pauseButton.classList.replace('off','on');
+                
                 this.disc.classList.add('roll_running');
             }
             this.isPlaying = !this.isPlaying;
@@ -424,23 +434,86 @@
                 isDragging = false;
             });
         }
-    }
-    function load_music(){
-        let musiclist = [];
-        fetch("js/musiclist.json")
-            .then(res => res.json())
-            .then(data => {musiclist = data; console.log(data);})
-            .then(() => {
-                const cover1 = document.getElementById("cover")
-                ind = Math.floor(Math.random() * musiclist.length)
-                const audio2use = new Audio(musiclist[ind].name);
-                const cover2use = musiclist[ind].cover
-                const p = new player(audio2use, document.getElementById('playButton'), document.getElementById('pauseButton'), document.getElementById('disc1'));
-                cover1.src = cover2use
-                p.Move();
-    })}
-    load_music()
 
+        load_music(dir){// 1下 -1上 0初始化
+            
+            if (dir == 0){
+                fetch("js/musiclist.json")
+                    .then(res => res.json())
+                    .then(data => {this.musiclist = data; console.log(data);})
+                    .then(() => {
+                        
+                        this.ind_now = Math.floor(Math.random() * this.musiclist.length);
+                        
+                        this.audio = new Audio(this.musiclist[this.ind_now].name);
+                        this.cover1.src = this.musiclist[this.ind_now].cover;
+                        })}
+            
+            else if(dir == 1){
+                if(this.isPlaying){
+                    this.Play()};
+                
+                this.disc.classList.add('roll_reset')
+                void this.disc.offsetWidth;
+                    if (this.musiclist.length-1 == this.ind_now ){
+                    
+                    this.ind_now = 0;
+                    
+                    
+                }
+                else{
+                    this.ind_now += 1;
+                   
+                    
+
+                
+
+                }
+                this.audio = new Audio(this.musiclist[this.ind_now].name);
+                this.cover1.src = this.musiclist[this.ind_now].cover;
+                this.disc.classList.remove('roll_reset')
+                this.Play()
+
+            }
+            else{
+                if(this.isPlaying){
+                    this.Play()};
+                this.disc.classList.add('roll_reset')
+                void this.disc.offsetWidth;
+                    if (0 == this.ind_now ){
+                    this.ind_now = this.musiclist.length-1;
+                   
+                }
+                else{
+                    this.ind_now -= 1;
+                    
+
+                
+
+                }
+                this.audio = new Audio(this.musiclist[this.ind_now].name);
+                this.cover1.src =this.musiclist[this.ind_now].cover;
+                this.disc.classList.remove('roll_reset')
+                this.Play();
+
+
+            }
+           
+                
+                
+
+            
+
+            
+
+        
+
+
+        }
+    }
+    
+    const p = new player(0, document.getElementById('playButton'), document.getElementById('pauseButton'),document.getElementById('fast'),document.getElementById('slow'), document.getElementById('disc1'));
+    
     function change(now, dest){
         let page_now = document.getElementById(now)
         let page_dest = document.getElementById(dest)
@@ -479,7 +552,7 @@
     
     
     
-//   
+//   日记加载
     let isread = false;
     let ismoving = false;
 
