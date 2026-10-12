@@ -7,7 +7,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent      # 脚本所在目录
 text_file = str(BASE_DIR / 'dia' / 'text')
 js_file = str(BASE_DIR / 'js' / 'textlist.json')
-doc_list = os.listdir(text_file)
+doc_list = sorted(os.listdir(text_file),
+                  key=lambda x: os.path.getmtime(os.path.join(text_file, x)))
 
 
 existing = {text_file + '/' + j for j in doc_list}#已有文件目录
