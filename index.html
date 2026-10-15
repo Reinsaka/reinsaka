@@ -289,6 +289,21 @@
         #dia_list {
             width: 100%;
         }
+
+       #search_box{
+        width: 250px;
+        height: 350px;
+        background-color: #62b3c6af;
+        display: grid;
+        place-items: center;
+        position: fixed;
+        bottom: 20vh;
+        left: 10vw;            /* ← 加这个，贴左边 20px */
+        border-radius: 10px;   /* 加点圆角好看 */
+        padding: 10px;         /* 内边距，别让内容贴边 */
+        box-sizing: border-box;
+        z-index: 10;         /* 浮在上面 */
+    }
     </style>
 </head>
 <body>
@@ -330,9 +345,16 @@
             <ul style="list-style: none; margin-top: 10px;" id = "textlist">
                 
             </ul>
+            <div id ='search_box'>
+               <input id="input_box">
+               <input type="submit"> 
+
+               
+
+            </div>
         </section>
     </section>
-
+ 
     <section id="proj" class="page passive">
         <ul class="nav">
             <li><button class="btn" onclick="change('proj','hub')">首页</button></li>
@@ -349,6 +371,7 @@
             <ul style="list-style: none; margin-top: 10px;" id = "textlist">
                 
             </ul>
+            
         </section>
 
     </section>
@@ -559,6 +582,8 @@
 
 
     function doc_change(doc,content) {
+
+
         if (ismoving) return;
         ismoving = true;
 
@@ -607,6 +632,18 @@
         }
     }
     
+    function search(key){
+        
+        fetch('/api/doc_search', {
+            method: 'POST',                                    // 请求方法
+            headers: { 'Content-Type': 'application/plain' },   // 告诉后端：我发的是 JSON
+            body: key    // 要发的数据
+        })
+        .then(res => res.json())        // 后端返回json
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+        
+    }
 //
   
     
